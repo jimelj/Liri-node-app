@@ -32,65 +32,76 @@ switch (command) {
 
 
 function movieThis() {
-    value = value.join('+');
-    console.log('this is value',value);
-    let queryUrl = 'http://www.omdbapi.com/?t='+value+'&y=&plot=short&r=json';
-    request(queryUrl, function(error, response, body) {
+  value = value.join('+');
+  console.log('this is value', value);
+  let queryUrl = 'http://www.omdbapi.com/?t=' + value + '&y=&plot=short&r=json&tomatoes=true';
+  request(queryUrl, function(error, response, body) {
 
-  if (!error &&response.statusCode === 200){
-    // console.log(JSON.parse(body));
-    console.log(JSON.parse(body).Title);
-    console.log(JSON.parse(body).Year);
-    console.log(JSON.parse(body).imdbRating);
-    console.log(JSON.parse(body).Country);
-    console.log(JSON.parse(body).Language);
-    console.log(JSON.parse(body).Actors);
+    if (!error && response.statusCode === 200) {
+      // console.log(JSON.parse(body));
+      let {Title,Year,imdbRating,Country,Language,Plot,Actors,Ratings,tomatoURL} = JSON.parse(body);
+      console.log("==========================================================================================================================");
+      console.log(' ');
+      console.log(Title);
+      console.log('Year:',Year);
+      console.log('IMDB Rating:',imdbRating);
+      console.log('Countries:',Country);
+      console.log('Languages:',Language);
+      console.log(Plot);
+      console.log('Actors:',Actors);
+      for (var i = 0; i < Ratings.length; i++) {
+        if(Ratings[i].Source === 'Rotten Tomatoes'){
+        console.log(Ratings[i].Source+':', Ratings[i].Value);
+        }
+      }
+      console.log(tomatoURL);
+      console.log(' ');
+      console.log("==========================================================================================================================");
 
-    for (var i = 0; i < JSON.parse(body).Ratings.length; i++) {
-      console.log(JSON.parse(body).Ratings[i].Source +" "+ JSON.parse(body).Ratings[i].Value );
     }
 
-  }
-
-});
+  });
 }
 
-function spotifyThis(){
+function spotifyThis() {
   // value = value.join(' ');
 
-  spotify.search({ type: 'track', query: value, limit: 1 }, function(err, data) {
-    if ( err ) {
-        console.log('Error occurred: ' + err);
-        return;
+  spotify.search({
+    type: 'track',
+    query: value,
+    limit: 1
+  }, function(err, data) {
+    if (err) {
+      console.log('Error occurred: ' + err);
+      return;
     }
     console.log(JSON.stringify(data, null, 2));
     // Do something with 'data'
-});
+  });
 }
 
 function myTweets() {
-  var client = new Twitter({
-  consumer_key: consumerKey,
-  consumer_secret: consumerSecret,
-  access_token_key: tokenKey,
-  access_token_secret: tokenSecret
-});
+  let client = new Twitter({
+    consumer_key: consumerKey,
+    consumer_secret: consumerSecret,
+    access_token_key: tokenKey,
+    access_token_secret: tokenSecret
+  });
 
-var params = {screen_name: 'jimelj'};
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  if (!error) {
-    for (var i = 0; i < 19; i++) {
-      // console.log(JSON.stringify(tweets[i], null, 2));
-      console.log("==========================================================================================================================");
-      console.log(' ');
-      console.log(tweets[i].text);
-      console.log('Post it on: ' + tweets[i].created_at);
-      console.log(' ');
-      console.log("==========================================================================================================================");
+  let params = {
+    screen_name: 'jimelj'
+  };
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+      for (var i = 0; i < 19; i++) {
+        // console.log(JSON.stringify(tweets[i], null, 2));
+        console.log("==========================================================================================================================");
+        console.log(' ');
+        console.log(tweets[i].text);
+        console.log('Post it on: ' + tweets[i].created_at);
+        console.log(' ');
+        console.log("==========================================================================================================================");
+      }
     }
-
-
-  }
-});
-
+  });
 }
