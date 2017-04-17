@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 const keys = require('./keys.js');
 const request = require("request");
-const Twitter = require('twitter');
+var Twitter = require('twitter');
 const spotify = require('spotify');
 
 
@@ -69,7 +69,28 @@ function spotifyThis(){
 }
 
 function myTweets() {
+  var client = new Twitter({
+  consumer_key: consumerKey,
+  consumer_secret: consumerSecret,
+  access_token_key: tokenKey,
+  access_token_secret: tokenSecret
+});
+
+var params = {screen_name: 'jimelj'};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    for (var i = 0; i < 19; i++) {
+      // console.log(JSON.stringify(tweets[i], null, 2));
+      console.log("==========================================================================================================================");
+      console.log(' ');
+      console.log(tweets[i].text);
+      console.log('Post it on: ' + tweets[i].created_at);
+      console.log(' ');
+      console.log("==========================================================================================================================");
+    }
 
 
+  }
+});
 
 }
