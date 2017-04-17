@@ -12,7 +12,6 @@ const tokenSecret = keys.twitterKeys.access_token_secret;
 
 let command = process.argv[2];
 let value = process.argv.slice(3);
-
 switch (command) {
   case "my-tweets":
     myTweets();
@@ -33,7 +32,7 @@ switch (command) {
 
 
 function movieThis() {
-    value = value.join("+");
+    value = value.join('+');
     console.log('this is value',value);
     let queryUrl = 'http://www.omdbapi.com/?t='+value+'&y=&plot=short&r=json';
     request(queryUrl, function(error, response, body) {
@@ -54,4 +53,23 @@ function movieThis() {
   }
 
 });
+}
+
+function spotifyThis(){
+  // value = value.join(' ');
+
+  spotify.search({ type: 'track', query: value, limit: 1 }, function(err, data) {
+    if ( err ) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+    console.log(JSON.stringify(data, null, 2));
+    // Do something with 'data'
+});
+}
+
+function myTweets() {
+
+
+
 }
