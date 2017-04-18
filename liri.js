@@ -32,6 +32,9 @@ switch (command) {
 
 
 function movieThis() {
+  if (value.length === 0){
+     value.push('Mr. Nobody');
+  }
   value = value.join('+');
   console.log('this is value', value);
   let queryUrl = 'http://www.omdbapi.com/?t=' + value + '&y=&plot=short&r=json&tomatoes=true';
@@ -39,19 +42,29 @@ function movieThis() {
 
     if (!error && response.statusCode === 200) {
       // console.log(JSON.parse(body));
-      let {Title,Year,imdbRating,Country,Language,Plot,Actors,Ratings,tomatoURL} = JSON.parse(body);
+      let {
+        Title,
+        Year,
+        imdbRating,
+        Country,
+        Language,
+        Plot,
+        Actors,
+        Ratings,
+        tomatoURL
+      } = JSON.parse(body);
       console.log("==========================================================================================================================");
       console.log(' ');
       console.log(Title);
-      console.log('Year:',Year);
-      console.log('IMDB Rating:',imdbRating);
-      console.log('Countries:',Country);
-      console.log('Languages:',Language);
+      console.log('Year:', Year);
+      console.log('IMDB Rating:', imdbRating);
+      console.log('Countries:', Country);
+      console.log('Languages:', Language);
       console.log(Plot);
-      console.log('Actors:',Actors);
+      console.log('Actors:', Actors);
       for (var i = 0; i < Ratings.length; i++) {
-        if(Ratings[i].Source === 'Rotten Tomatoes'){
-        console.log(Ratings[i].Source+':', Ratings[i].Value);
+        if (Ratings[i].Source === 'Rotten Tomatoes') {
+          console.log(Ratings[i].Source + ':', Ratings[i].Value);
         }
       }
       console.log(tomatoURL);
@@ -64,8 +77,8 @@ function movieThis() {
 }
 
 function spotifyThis() {
-  // value = value.join(' ');
-
+  value = value.join(' ');
+  console.log(value);
   spotify.search({
     type: 'track',
     query: value,
@@ -75,8 +88,19 @@ function spotifyThis() {
       console.log('Error occurred: ' + err);
       return;
     }
-    console.log(JSON.stringify(data, null, 2));
-    // Do something with 'data'
+    let {artists,name,preview_url,album} = data.tracks.items[0];
+    console.log("==========================================================================================================================");
+    console.log(' ');
+    console.log(artists[0].name);
+    console.log('Song:',name);
+    console.log(preview_url);
+    console.log('Album:',album.name);
+    console.log(' ');
+    console.log("==========================================================================================================================");
+
+
+
+
   });
 }
 
@@ -89,16 +113,17 @@ function myTweets() {
   });
 
   let params = {
-    screen_name: 'jimelj'
+    screen_name: 'jimelj',
+    count: 20
   };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
-      for (var i = 0; i < 19; i++) {
-        // console.log(JSON.stringify(tweets[i], null, 2));
+      for (var i = 0; i < tweets.length; i++) {
+
         console.log("==========================================================================================================================");
         console.log(' ');
         console.log(tweets[i].text);
-        console.log('Post it on: ' + tweets[i].created_at);
+        console.log('Posted on: ' + tweets[i].created_at);
         console.log(' ');
         console.log("==========================================================================================================================");
       }
