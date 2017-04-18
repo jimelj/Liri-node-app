@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/jimelj/Liri-node-app#readme",
   "dependencies": {
+    "chalk": "^1.1.3",
     "request": "^2.81.0",
     "spotify": "^0.3.0",
     "twitter": "^1.7.0"

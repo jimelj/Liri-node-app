@@ -4,6 +4,7 @@ const request = require("request");
 const Twitter = require('twitter');
 const spotify = require('spotify');
 const fs = require("fs");
+const chalk = require('chalk');
 
 
 const consumerKey = keys.twitterKeys.consumer_key;
@@ -56,23 +57,23 @@ function movieThis() {
         Ratings,
         tomatoURL
       } = JSON.parse(body);
-      console.log("==========================================================================================================================");
+      console.log(chalk.yellow("========================================================"+chalk.bold.inverse('OMDB')+"=============================================================="));
       console.log(' ');
       console.log(Title);
-      console.log('Year:', Year);
-      console.log('IMDB Rating:', imdbRating);
-      console.log('Countries:', Country);
-      console.log('Languages:', Language);
+      console.log(chalk.yellow.bold.inverse('Year:'), Year);
+      console.log(chalk.yellow.bold.inverse('IMDB Rating:'), imdbRating);
+      console.log(chalk.yellow.bold.inverse('Countries:'), Country);
+      console.log(chalk.yellow.bold.inverse('Languages:'), Language);
       console.log(Plot);
-      console.log('Actors:', Actors);
+      console.log(chalk.yellow.bold.inverse('Actors:'), Actors);
       for (let i = 0; i < Ratings.length; i++) {
         if (Ratings[i].Source === 'Rotten Tomatoes') {
-          console.log(Ratings[i].Source + ':', Ratings[i].Value);
+          console.log(chalk.yellow.bold.inverse(Ratings[i].Source + ':'), Ratings[i].Value);
         }
       }
       console.log(tomatoURL);
       console.log(' ');
-      console.log("==========================================================================================================================");
+      console.log(chalk.yellow("=========================================================================================================================="));
 
     }
   });
@@ -99,14 +100,14 @@ function spotifyThis() {
       preview_url,
       album
     } = data.tracks.items[0];
-    console.log("==========================================================================================================================");
+    console.log(chalk.green("=========================================================="+chalk.bold.inverse('Spotify')+"========================================================="));
     console.log(' ');
     console.log(artists[0].name);
-    console.log('Song:', name);
+    console.log(chalk.green.bold.inverse('Song:'), name);
     console.log(preview_url);
-    console.log('Album:', album.name);
+    console.log(chalk.green.bold.inverse('Album:'), album.name);
     console.log(' ');
-    console.log("==========================================================================================================================");
+    console.log(chalk.green("=========================================================================================================================="));
 
   });
 }
@@ -127,12 +128,12 @@ function myTweets() {
     if (!error) {
       for (let i = 0; i < tweets.length; i++) {
 
-        console.log("==========================================================================================================================");
+        console.log(chalk.blue("======================================================"+chalk.bold.inverse('Twitter')+"============================================================="));
         console.log(' ');
         console.log(tweets[i].text);
-        console.log('Posted on: ' + tweets[i].created_at);
+        console.log(chalk.blue.bold.inverse('Posted on: ') + tweets[i].created_at);
         console.log(' ');
-        console.log("==========================================================================================================================");
+        console.log(chalk.blue("=========================================================================================================================="));
       }
     }
   });
