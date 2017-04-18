@@ -65,7 +65,7 @@ function movieThis() {
       console.log('Languages:', Language);
       console.log(Plot);
       console.log('Actors:', Actors);
-      for (var i = 0; i < Ratings.length; i++) {
+      for (let i = 0; i < Ratings.length; i++) {
         if (Ratings[i].Source === 'Rotten Tomatoes') {
           console.log(Ratings[i].Source + ':', Ratings[i].Value);
         }
@@ -125,7 +125,7 @@ function myTweets() {
   };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
-      for (var i = 0; i < tweets.length; i++) {
+      for (let i = 0; i < tweets.length; i++) {
 
         console.log("==========================================================================================================================");
         console.log(' ');
