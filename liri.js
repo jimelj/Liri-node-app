@@ -15,24 +15,25 @@ const tokenSecret = keys.twitterKeys.access_token_secret;
 let command = process.argv[2];
 let value = process.argv.slice(3);
 ckCommand();
-function ckCommand(){
-switch (command) {
-  case "my-tweets":
-    myTweets();
-    break;
 
-  case "spotify-this-song":
-    spotifyThis();
-    break;
+function ckCommand() {
+  switch (command) {
+    case "my-tweets":
+      myTweets();
+      break;
 
-  case "movie-this":
-    movieThis();
-    break;
+    case "spotify-this-song":
+      spotifyThis();
+      break;
 
-  case "do-what-it-says":
-    doWhat(command);
-    break;
-}
+    case "movie-this":
+      movieThis();
+      break;
+
+    case "do-what-it-says":
+      doWhat(command);
+      break;
+  }
 }
 
 function movieThis() {
@@ -57,7 +58,7 @@ function movieThis() {
         Ratings,
         tomatoURL
       } = JSON.parse(body);
-      console.log(chalk.yellow("========================================================"+chalk.bold.inverse('OMDB')+"=============================================================="));
+      console.log(chalk.yellow("========================================================" + chalk.bold.inverse('OMDB') + "=============================================================="));
       console.log(' ');
       console.log(Title);
       console.log(chalk.yellow.bold.inverse('Year:'), Year);
@@ -78,6 +79,7 @@ function movieThis() {
     }
   });
 }
+
 function spotifyThis() {
   if (value.length === 0) {
     value.push('The Sign');
@@ -100,7 +102,7 @@ function spotifyThis() {
       preview_url,
       album
     } = data.tracks.items[0];
-    console.log(chalk.green("=========================================================="+chalk.bold.inverse('Spotify')+"========================================================="));
+    console.log(chalk.green("==========================================================" + chalk.bold.inverse('Spotify') + "========================================================="));
     console.log(' ');
     console.log(artists[0].name);
     console.log(chalk.green.bold.inverse('Song:'), name);
@@ -128,7 +130,7 @@ function myTweets() {
     if (!error) {
       for (let i = 0; i < tweets.length; i++) {
 
-        console.log(chalk.blue("======================================================"+chalk.bold.inverse('Twitter')+"============================================================="));
+        console.log(chalk.blue("======================================================" + chalk.bold.inverse('Twitter') + "============================================================="));
         console.log(' ');
         console.log(tweets[i].text);
         console.log(chalk.blue.bold.inverse('Posted on: ') + tweets[i].created_at);
@@ -139,17 +141,17 @@ function myTweets() {
   });
 }
 
-function doWhat(){
-  fs.readFile('./random.txt', 'utf8', function (err,data) {
-  if (err) {
-    throw err;
-  }
-  console.log(data);
-  data = data.split(',');
-  command = data[0];
-  value = data[1].split(' ');
-  console.log(command);
-  console.log(value);
-  ckCommand();
-});
+function doWhat() {
+  fs.readFile('./random.txt', 'utf8', function(err, data) {
+    if (err) {
+      throw err;
+    }
+    console.log(data);
+    data = data.split(',');
+    command = data[0];
+    value = data[1].split(' ');
+    console.log(command);
+    console.log(value);
+    ckCommand();
+  });
 }
