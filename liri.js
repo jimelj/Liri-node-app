@@ -1,8 +1,9 @@
 /*jshint esversion: 6 */
 const keys = require('./keys.js');
 const request = require("request");
-var Twitter = require('twitter');
+const Twitter = require('twitter');
 const spotify = require('spotify');
+const fs = require("fs");
 
 
 const consumerKey = keys.twitterKeys.consumer_key;
@@ -12,6 +13,8 @@ const tokenSecret = keys.twitterKeys.access_token_secret;
 
 let command = process.argv[2];
 let value = process.argv.slice(3);
+ckCommand();
+function ckCommand(){
 switch (command) {
   case "my-tweets":
     myTweets();
@@ -26,14 +29,14 @@ switch (command) {
     break;
 
   case "do-what-it-says":
-    doWhat();
+    doWhat(command);
     break;
 }
-
+}
 
 function movieThis() {
-  if (value.length === 0){
-     value.push('Mr. Nobody');
+  if (value.length === 0) {
+    value.push('Mr. Nobody');
   }
   value = value.join('+');
   console.log('this is value', value);
@@ -72,10 +75,8 @@ function movieThis() {
       console.log("==========================================================================================================================");
 
     }
-
   });
 }
-
 function spotifyThis() {
   value = value.join(' ');
   console.log(value);
@@ -88,18 +89,20 @@ function spotifyThis() {
       console.log('Error occurred: ' + err);
       return;
     }
-    let {artists,name,preview_url,album} = data.tracks.items[0];
+    let {
+      artists,
+      name,
+      preview_url,
+      album
+    } = data.tracks.items[0];
     console.log("==========================================================================================================================");
     console.log(' ');
     console.log(artists[0].name);
-    console.log('Song:',name);
+    console.log('Song:', name);
     console.log(preview_url);
-    console.log('Album:',album.name);
+    console.log('Album:', album.name);
     console.log(' ');
     console.log("==========================================================================================================================");
-
-
-
 
   });
 }
@@ -129,4 +132,19 @@ function myTweets() {
       }
     }
   });
+}
+
+function doWhat(){
+  fs.readFile('./random.txt', 'utf8', function (err,data) {
+  if (err) {
+    throw err;
+  }
+  console.log(data);
+  data = data.split(',');
+  command = data[0];
+  value = data[1].split(' ');
+  console.log(command);
+  console.log(value);
+  ckCommand();
+});
 }
