@@ -78,6 +78,10 @@ function movieThis() {
   });
 }
 function spotifyThis() {
+  if (value.length === 0) {
+    value.push('The Sign');
+    value.push('Ace of Base');
+  }
   value = value.join(' ');
   console.log(value);
   spotify.search({
